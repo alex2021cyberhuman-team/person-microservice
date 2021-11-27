@@ -1,6 +1,8 @@
-﻿namespace Conduit.Person.BusinessLogic
+﻿using System;
+
+namespace Conduit.Person.BusinessLogic
 {
     public record FollowingInfo(
         string FollowingUserName,
-        string FollowerUserName);
+        string FollowerUserId);
 }
