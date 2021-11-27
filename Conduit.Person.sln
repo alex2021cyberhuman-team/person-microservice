@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conduit.Person.WebApi", "Conduit.Person.WebApi\Conduit.Person.WebApi.csproj", "{325DDCE7-06CB-478B-84C7-81121C325816}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conduit.Shared", "..\shared-core\Conduit.Shared\Conduit.Shared.csproj", "{4FB648CD-BE14-419D-A735-13456DACF078}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{325DDCE7-06CB-478B-84C7-81121C325816}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{325DDCE7-06CB-478B-84C7-81121C325816}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{325DDCE7-06CB-478B-84C7-81121C325816}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{325DDCE7-06CB-478B-84C7-81121C325816}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FB648CD-BE14-419D-A735-13456DACF078}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FB648CD-BE14-419D-A735-13456DACF078}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FB648CD-BE14-419D-A735-13456DACF078}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FB648CD-BE14-419D-A735-13456DACF078}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
