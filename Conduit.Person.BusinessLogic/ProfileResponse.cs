@@ -14,7 +14,7 @@
                 bio,
                 following);
         }
-        
+
         public ProfileModel Profile { get; init; }
     }
 }

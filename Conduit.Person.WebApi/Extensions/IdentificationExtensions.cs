@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 
@@ -12,7 +11,7 @@ namespace Conduit.Person.WebApi.Extensions
             var claim = GetClaim(httpContext);
 
             var currentUserId = claim.Value;
-            
+
             return currentUserId;
         }
 
@@ -31,7 +30,7 @@ namespace Conduit.Person.WebApi.Extensions
                 throw new InvalidOperationException(
                     $"Invalid userId ({claim.Value})");
             }
-            
+
             return claim;
         }
 

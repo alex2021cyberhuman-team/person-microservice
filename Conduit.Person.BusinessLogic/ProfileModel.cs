@@ -5,9 +5,9 @@ namespace Conduit.Person.BusinessLogic
     public record ProfileModel
     {
         public ProfileModel(
-            string username, 
+            string username,
             string? image = null,
-            string? bio = null, 
+            string? bio = null,
             bool following = false)
         {
             Username = username;

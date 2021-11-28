@@ -13,7 +13,7 @@ namespace Conduit.Person.BusinessLogic
         }
 
         public T? Response { get; }
-        
+
         public HttpStatusCode StatusCode { get; }
     }
 }
