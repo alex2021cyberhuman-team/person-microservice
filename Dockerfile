@@ -1,8 +1,8 @@
-﻿FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine AS base
 WORKDIR /app
 EXPOSE 80
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS build
 WORKDIR /src
 COPY ["Conduit.Person.WebApi/Conduit.Person.WebApi.csproj", "Conduit.Person.WebApi/"]
 RUN dotnet restore "Conduit.Person.WebApi/Conduit.Person.WebApi.csproj"
@@ -18,6 +18,8 @@ FROM build AS publish
 
 ARG CONFIG=Debug
 ENV CONFIG=$CONFIG
+ARG ASPNETCORE_ENVIRONMENT=Development
+ENV ASPNETCORE_ENVIRONMENT=$ASPNETCORE_ENVIRONMENT
 
 RUN dotnet publish "Conduit.Person.WebApi.csproj" -c $CONFIG -o /app/publish
 

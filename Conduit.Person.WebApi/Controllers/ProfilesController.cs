@@ -1,4 +1,4 @@
-﻿using Conduit.Person.WebApi.Extensions;
+using Conduit.Person.WebApi.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

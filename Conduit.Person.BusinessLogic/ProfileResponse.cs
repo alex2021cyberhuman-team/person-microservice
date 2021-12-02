@@ -1,4 +1,4 @@
-﻿namespace Conduit.Person.BusinessLogic
+namespace Conduit.Person.BusinessLogic
 {
     public record ProfileResponse
     {
