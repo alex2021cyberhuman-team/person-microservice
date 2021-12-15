@@ -8,7 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\shared-core\Conduit.Shared\Conduit.Shared.csproj"/>
+    <ProjectReference Include="..\Conduit.Person.BusinessLogic\Conduit.Person.BusinessLogic.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Neo4j.Driver" Version="4.3.2" />
   </ItemGroup>
 
 </Project>
