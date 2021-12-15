@@ -7,30 +7,24 @@ public static class IdentificationExtensions
     public static string GetCurrentUserId(
         this HttpContext httpContext)
     {
+        return GetCurrentUserIdOptional(httpContext) ??
+               throw new ApplicationException("Empty identification claim");
+    }
+
+    public static string? GetCurrentUserIdOptional(
+        this HttpContext httpContext)
+    {
         var claim = GetClaim(httpContext);
 
-        var currentUserId = claim.Value;
+        var currentUserId = claim?.Value;
 
         return currentUserId;
     }
 
-    private static Claim GetClaim(
+    private static Claim? GetClaim(
         HttpContext httpContext)
     {
-        var claim = FindFirst(httpContext);
-
-        if (claim is null)
-        {
-            throw new InvalidOperationException("User is not authenticated");
-        }
-
-        if (string.IsNullOrWhiteSpace(claim.Value))
-        {
-            throw new InvalidOperationException(
-                $"Invalid userId ({claim.Value})");
-        }
-
-        return claim;
+        return FindFirst(httpContext);
     }
 
     private static Claim? FindFirst(

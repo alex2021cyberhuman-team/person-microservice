@@ -16,4 +16,7 @@ public interface IProfileRepository
 
     Task<ProfileResponse?> AddFollowingAsync(
         FollowingInfo info);
+
+    Task<ProfileResponse?> RemoveFollowingAsync(
+        FollowingInfo info);
 }

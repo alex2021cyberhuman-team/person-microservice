@@ -32,45 +32,15 @@ public class Neo4JProfileRepository : IProfileRepository, IAsyncDisposable
     public async Task SaveAfterRegisterEventAsync(
         RegisterUserEventModel registerUserEventModel)
     {
-        await Session.WriteTransactionAsync(async tx =>
-        {
-            var result = await tx.RunAsync(@"MERGE (p:Profile {id: $Id})
-ON CREATE
-SET 
-    p.id = $Id,
-    p.username = $Username, 
-    p.email = $Email,
-    p.image = $Image,
-    p.biography = $Biography
-RETURN p", registerUserEventModel.ToDictionary());
-            if (await result.FetchAsync() == false)
-            {
-                throw new Neo4JApplicationException(
-                    $"Failed saving during registration {registerUserEventModel.Id}");
-            }
-        });
+        var dictionary = registerUserEventModel.ToDictionary();
+        await MergeProfileAsync(dictionary);
     }
 
     public async Task SaveAfterUpdateEventAsync(
         UpdateUserEventModel updateUserEventModel)
     {
-        await Session.WriteTransactionAsync(async tx =>
-        {
-            var result = await tx.RunAsync(@"MERGE (p:Profile {id: $Id})
-ON MATCH
-SET 
-    p.id = $Id,
-    p.username = $Username, 
-    p.email = $Email,
-    p.image = $Image,
-    p.biography = $Biography
-RETURN p", updateUserEventModel.ToDictionary());
-            if (await result.FetchAsync() == false)
-            {
-                throw new Neo4JApplicationException(
-                    $"Failed saving during updating {updateUserEventModel.Id}");
-            }
-        });
+        var dictionary = updateUserEventModel.ToDictionary();
+        await MergeProfileAsync(dictionary);
     }
 
     public async Task<ProfileResponse?> FindAsync(
@@ -80,7 +50,7 @@ RETURN p", updateUserEventModel.ToDictionary());
         {
             var result = await tx.RunAsync(
                 @"MATCH (following:Profile {username: $FollowingUsername})
-MATCH (follower:Profile {username: $FollowerUserId})
+OPTIONAL MATCH (follower:Profile {id: $FollowerUserId})
 OPTIONAL MATCH (follower)-[relation:FOLLOW]->(following)
 RETURN
 following.username AS username,
@@ -99,7 +69,7 @@ relation IS NOT NULL AS following", info.ToDictionary());
             var result = await tx.RunAsync(
                 @"MATCH (following:Profile {username: $FollowingUsername})
 MATCH (follower:Profile {id: $FollowerUserId})
-MERGE MATCH (follower)-[relation:FOLLOW]->(following)
+MERGE (follower)-[relation:FOLLOW]->(following)
 RETURN
 following.username AS username,
 following.biography AS biography,
@@ -127,6 +97,27 @@ following.biography AS biography,
 following.image AS image,
 false AS following", info.ToDictionary());
             return await Coalesce(result);
+        });
+    }
+
+    private async Task MergeProfileAsync(
+        IDictionary<string, object?> dictionary)
+    {
+        await Session.WriteTransactionAsync(async tx =>
+        {
+            var result = await tx.RunAsync(
+                @"MERGE (p:Profile {id: $Id})
+SET 
+    p.username = $Username, 
+    p.email = $Email,
+    p.image = $Image,
+    p.biography = $Biography
+RETURN p", dictionary);
+            if (await result.FetchAsync() == false)
+            {
+                throw new Neo4JApplicationException(
+                    $"Failed saving during registration {dictionary["Id"]}");
+            }
         });
     }
 

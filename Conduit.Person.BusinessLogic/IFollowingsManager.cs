@@ -2,11 +2,11 @@ namespace Conduit.Person.BusinessLogic;
 
 public interface IFollowingsManager
 {
-    Task<ExecutionResult<Empty>> AssignFollowingAsync(
+    Task<ExecutionResult<ProfileResponse>> AssignFollowingAsync(
         FollowingInfo followingInfo,
         CancellationToken cancellationToken = default);
 
-    Task<ExecutionResult<Empty>> DeAssignFollowingAsync(
+    Task<ExecutionResult<ProfileResponse>> DeAssignFollowingAsync(
         FollowingInfo followingInfo,
         CancellationToken cancellationToken = default);
 }

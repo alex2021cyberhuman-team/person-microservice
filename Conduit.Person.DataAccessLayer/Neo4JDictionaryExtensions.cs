@@ -8,38 +8,56 @@ namespace Conduit.Person.DataAccessLayer;
 public static class Neo4JDictionaryExtensions
 {
     public static IDictionary<string, object?> ToDictionary(
-        this RegisterUserEventModel model) =>
-        new Dictionary<string, object?>()
+        this RegisterUserEventModel model)
+    {
+        return new Dictionary<string, object?>
         {
             ["Id"] = model.Id.ToString(),
             ["Username"] = model.Username,
             ["Email"] = model.Email,
             ["Image"] = model.Image,
-            ["Biography"] = model.Biography,
+            ["Biography"] = model.Biography
         };
-    
+    }
+
     public static IDictionary<string, object?> ToDictionary(
-        this UpdateUserEventModel model) =>
-        new Dictionary<string, object?>()
+        this UpdateUserEventModel model)
+    {
+        return new Dictionary<string, object?>
         {
             ["Id"] = model.Id.ToString(),
             ["Username"] = model.Username,
             ["Email"] = model.Email,
             ["Image"] = model.Image,
-            ["Biography"] = model.Biography,
+            ["Biography"] = model.Biography
         };
-    
+    }
+
     public static IDictionary<string, object?> ToDictionary(
-        this FollowingInfo model) =>
-        new Dictionary<string, object?>()
+        this FollowingInfo model)
+    {
+        var (followingUsername, followerUserId) = model;
+        return new Dictionary<string, object?>
         {
-            ["FollowerUserId"] = model.FollowerUserId,
-            ["FollowingUsername"] = model.FollowingUsername
+            ["FollowerUserId"] = GetId(followerUserId),
+            ["FollowingUsername"] = followingUsername
         };
-    
-    public static ProfileResponse ToProfileResponse(this IRecord profileRecord) => new(
-        profileRecord["username"].As<string>(),
-        profileRecord["image"].As<string>(),
-        profileRecord["biography"].As<string>(),
-        profileRecord["following"].As<bool>());
+    }
+
+    private static string GetId(
+        string id)
+    {
+        return string.IsNullOrWhiteSpace(id)
+            ? string.Empty
+            : Guid.Parse(id).ToString();
+    }
+
+    public static ProfileResponse ToProfileResponse(
+        this IRecord profileRecord)
+    {
+        return new(profileRecord["username"].As<string>(),
+            profileRecord["image"].As<string>(),
+            profileRecord["biography"].As<string>(),
+            profileRecord["following"].As<bool>());
+    }
 }

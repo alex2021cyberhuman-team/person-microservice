@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Conduit.Person.BusinessLogic;
 using Conduit.Person.DataAccessLayer;
 using Conduit.Person.WebApi.Consumers;
 using Conduit.Shared.Events.Models.Users.Register;
@@ -33,7 +34,9 @@ services.AddJwtServices(configuration.GetSection("Jwt").Bind)
     .RegisterRabbitMqWithHealthCheck(configuration.GetSection("RabbitMQ").Bind)
     .RegisterConsumer<UpdateUserEventModel, UpdateUserEventConsumer>()
     .RegisterConsumer<RegisterUserEventModel, RegisterUserEventConsumer>()
-    .RegisterNeo4JWithHealthCheck(configuration.GetSection("Neo4J").Bind);
+    .RegisterNeo4JWithHealthCheck(configuration.GetSection("Neo4J").Bind)
+    .AddScoped<IProfileViewer, ProfileViewer>()
+    .AddScoped<IFollowingsManager, FollowingsManager>();
 
 #endregion
 
