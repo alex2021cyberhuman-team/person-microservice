@@ -11,12 +11,12 @@ public interface IProfileRepository
     Task SaveAfterUpdateEventAsync(
         UpdateUserEventModel updateUserEventModel);
 
-    Task<ProfileResponse?> FindAsync(
+    Task<(ProfileResponse?, Guid?)> FindAsync(
         FollowingInfo info);
 
-    Task<ProfileResponse?> AddFollowingAsync(
+    Task<(ProfileResponse?, Guid?)> AddFollowingAsync(
         FollowingInfo info);
 
-    Task<ProfileResponse?> RemoveFollowingAsync(
+    Task<(ProfileResponse?, Guid?)> RemoveFollowingAsync(
         FollowingInfo info);
 }

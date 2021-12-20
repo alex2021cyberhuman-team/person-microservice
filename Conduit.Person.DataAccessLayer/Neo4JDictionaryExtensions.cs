@@ -45,19 +45,21 @@ public static class Neo4JDictionaryExtensions
     }
 
     private static string GetId(
-        string id)
+        Guid followerUserId)
     {
-        return string.IsNullOrWhiteSpace(id)
+        return followerUserId == Guid.Empty
             ? string.Empty
-            : Guid.Parse(id).ToString();
+            : followerUserId.ToString();
     }
 
-    public static ProfileResponse ToProfileResponse(
+    public static (ProfileResponse, Guid) ToProfileResponse(
         this IRecord profileRecord)
     {
-        return new(profileRecord["username"].As<string>(),
-            profileRecord["image"].As<string>(),
-            profileRecord["biography"].As<string>(),
-            profileRecord["following"].As<bool>());
+        return (
+            new(profileRecord["username"].As<string>(),
+                profileRecord["image"].As<string>(),
+                profileRecord["biography"].As<string>(),
+                profileRecord["following"].As<bool>()),
+            Guid.Parse(profileRecord["id"].As<string>()));
     }
 }

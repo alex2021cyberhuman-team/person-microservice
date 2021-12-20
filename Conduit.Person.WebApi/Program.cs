@@ -2,12 +2,13 @@ using System.Text.Json;
 using Conduit.Person.BusinessLogic;
 using Conduit.Person.DataAccessLayer;
 using Conduit.Person.WebApi.Consumers;
+using Conduit.Shared.Events.Models.Profiles.CreateFollowing;
+using Conduit.Shared.Events.Models.Profiles.RemoveFollowing;
 using Conduit.Shared.Events.Models.Users.Register;
 using Conduit.Shared.Events.Models.Users.Update;
 using Conduit.Shared.Events.Services.RabbitMQ;
 using Conduit.Shared.Startup;
 using Conduit.Shared.Tokens;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Logging;
 
 var x = new Neo4JOptions();
@@ -32,8 +33,14 @@ services.AddJwtServices(configuration.GetSection("Jwt").Bind)
     .AddW3CLogging(configuration.GetSection("W3C").Bind).AddHttpClient()
     .AddHttpContextAccessor()
     .RegisterRabbitMqWithHealthCheck(configuration.GetSection("RabbitMQ").Bind)
-    .RegisterConsumer<UpdateUserEventModel, UpdateUserEventConsumer>()
-    .RegisterConsumer<RegisterUserEventModel, RegisterUserEventConsumer>()
+    .RegisterConsumer<UpdateUserEventModel,
+        UpdateUserEventConsumer>(configuration.GetSection("Events:UpdateUser")
+        .Bind)
+    .RegisterConsumer<RegisterUserEventModel,
+        RegisterUserEventConsumer>(configuration
+        .GetSection("Events:RegisterUser").Bind)
+    .RegisterProducer<CreateFollowingEventModel>()
+    .RegisterProducer<RemoveFollowingEventModel>()
     .RegisterNeo4JWithHealthCheck(configuration.GetSection("Neo4J").Bind)
     .AddScoped<IProfileViewer, ProfileViewer>()
     .AddScoped<IFollowingsManager, FollowingsManager>();

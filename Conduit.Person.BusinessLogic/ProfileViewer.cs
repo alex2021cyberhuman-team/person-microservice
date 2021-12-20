@@ -16,13 +16,13 @@ public class ProfileViewer : IProfileViewer
         FollowingInfo followingInfo,
         CancellationToken cancellationToken)
     {
-        var profileResponse = await _profileRepository.FindAsync(followingInfo);
+        var (profile, _) = await _profileRepository.FindAsync(followingInfo);
 
-        if (profileResponse is null)
+        if (profile is null)
         {
-            return new(profileResponse, HttpStatusCode.NotFound);
+            return new(profile, HttpStatusCode.NotFound);
         }
 
-        return new(profileResponse);
+        return new(profile);
     }
 }

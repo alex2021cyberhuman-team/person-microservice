@@ -43,59 +43,63 @@ public class Neo4JProfileRepository : IProfileRepository, IAsyncDisposable
         await MergeProfileAsync(dictionary);
     }
 
-    public async Task<ProfileResponse?> FindAsync(
+    public async Task<(ProfileResponse?, Guid?)> FindAsync(
         FollowingInfo info)
     {
         return await Session.WriteTransactionAsync(async tx =>
         {
             var result = await tx.RunAsync(
-                @"MATCH (following:Profile {username: $FollowingUsername})
+                @"MATCH (followed:Profile {username: $FollowingUsername})
 OPTIONAL MATCH (follower:Profile {id: $FollowerUserId})
-OPTIONAL MATCH (follower)-[relation:FOLLOW]->(following)
+OPTIONAL MATCH (follower)-[relation:FOLLOW]->(followed)
 RETURN
-following.username AS username,
-following.biography AS biography,
-following.image AS image,
-relation IS NOT NULL AS following", info.ToDictionary());
+followed.id AS id,
+followed.username AS username,
+followed.email AS email,
+followed.biography AS biography,
+followed.image AS image,
+relation IS NOT NULL AS followed", info.ToDictionary());
             return await Coalesce(result);
         });
     }
 
-    public async Task<ProfileResponse?> AddFollowingAsync(
+    public async Task<(ProfileResponse?, Guid?)> AddFollowingAsync(
         FollowingInfo info)
     {
         return await Session.WriteTransactionAsync(async tx =>
         {
             var result = await tx.RunAsync(
-                @"MATCH (following:Profile {username: $FollowingUsername})
+                @"MATCH (followed:Profile {username: $FollowingUsername})
 MATCH (follower:Profile {id: $FollowerUserId})
-MERGE (follower)-[relation:FOLLOW]->(following)
+MERGE (follower)-[relation:FOLLOW]->(followed)
 RETURN
-following.username AS username,
-following.biography AS biography,
-following.image AS image,
-true AS following", info.ToDictionary());
+followed.id AS id,
+followed.username AS username,
+followed.email AS email,
+followed.biography AS biography,
+followed.image AS image,
+true AS followed", info.ToDictionary());
             return await Coalesce(result);
         });
     }
 
-    public async Task<ProfileResponse?> RemoveFollowingAsync(
+    public async Task<(ProfileResponse?, Guid?)> RemoveFollowingAsync(
         FollowingInfo info)
     {
         return await Session.WriteTransactionAsync(async tx =>
         {
             var result = await tx.RunAsync(
-                @"MATCH (following:Profile {username: $FollowingUsername})
+                @"MATCH (followed:Profile {username: $FollowingUsername})
 MATCH (follower:Profile {id: $FollowerUserId})
-OPTIONAL MATCH (follower)-[relation:FOLLOW]->(following)
+OPTIONAL MATCH (follower)-[relation:FOLLOW]->(followed)
 DELETE relation
 RETURN
-following.id AS id,
-following.username AS username,
-following.email AS email,
-following.biography AS biography,
-following.image AS image,
-false AS following", info.ToDictionary());
+followed.id AS id,
+followed.username AS username,
+followed.email AS email,
+followed.biography AS biography,
+followed.image AS image,
+false AS followed", info.ToDictionary());
             return await Coalesce(result);
         });
     }
@@ -105,8 +109,7 @@ false AS following", info.ToDictionary());
     {
         await Session.WriteTransactionAsync(async tx =>
         {
-            var result = await tx.RunAsync(
-                @"MERGE (p:Profile {id: $Id})
+            var result = await tx.RunAsync(@"MERGE (p:Profile {id: $Id})
 SET 
     p.username = $Username, 
     p.email = $Email,
@@ -121,13 +124,13 @@ RETURN p", dictionary);
         });
     }
 
-    private static async Task<ProfileResponse?> Coalesce(
+    private static async Task<(ProfileResponse?, Guid?)> Coalesce(
         IResultCursor result)
     {
         var records = await result.ToListAsync();
         if (records.Any() == false)
         {
-            return null;
+            return (null, null);
         }
 
         var profileRecord = records.First();

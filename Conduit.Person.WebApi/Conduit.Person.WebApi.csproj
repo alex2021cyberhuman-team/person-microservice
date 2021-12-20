@@ -9,13 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" Version="6.0.1-rc2.3" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" Version="6.0.1-rc2.3"/>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3"/>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Conduit.Person.DataAccessLayer\Conduit.Person.DataAccessLayer.csproj" />
-    <ProjectReference Include="..\shared-core\Conduit.Shared\Conduit.Shared.csproj" />
+    <ProjectReference Include="..\Conduit.Person.DataAccessLayer\Conduit.Person.DataAccessLayer.csproj"/>
+    <ProjectReference Include="..\shared-core\Conduit.Shared\Conduit.Shared.csproj"/>
   </ItemGroup>
 
 </Project>

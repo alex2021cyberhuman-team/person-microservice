@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using Conduit.Person.BusinessLogic;
+﻿using Conduit.Person.BusinessLogic;
 using Conduit.Shared.Events.Models.Users.Update;
 using Conduit.Shared.Events.Services;
 
@@ -18,8 +17,6 @@ public class UpdateUserEventConsumer : IEventConsumer<UpdateUserEventModel>
     public async Task ConsumeAsync(
         UpdateUserEventModel message)
     {
-        Console.WriteLine("UpdateUserEventModel Queue is working!!! {0}",
-            JsonSerializer.Serialize(message));
         await _profileRepository.SaveAfterUpdateEventAsync(message);
     }
 }

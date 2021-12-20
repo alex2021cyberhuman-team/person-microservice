@@ -4,11 +4,14 @@ namespace Conduit.Person.WebApi.Extensions;
 
 public static class IdentificationExtensions
 {
-    public static string GetCurrentUserId(
+    public static Guid GetCurrentUserId(
         this HttpContext httpContext)
     {
-        return GetCurrentUserIdOptional(httpContext) ??
-               throw new ApplicationException("Empty identification claim");
+        var stringValue = GetCurrentUserIdOptional(httpContext) ??
+                          throw new ApplicationException(
+                              "Empty identification claim");
+        var typedValue = Guid.Parse(stringValue);
+        return typedValue;
     }
 
     public static string? GetCurrentUserIdOptional(

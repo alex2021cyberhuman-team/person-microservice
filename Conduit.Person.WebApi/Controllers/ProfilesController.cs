@@ -28,7 +28,7 @@ public class ProfilesController : ControllerBase
     {
         var currentUserId = HttpContext.GetCurrentUserIdOptional();
         var result = await _profileViewer.ReturnProfile(
-            new(username, currentUserId ?? string.Empty), cancellationToken);
+            new(username, Guid.Empty), cancellationToken);
         if (result.StatusCode == HttpStatusCode.OK)
         {
             return Ok(result.Response);
