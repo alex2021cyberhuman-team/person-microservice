@@ -49,7 +49,7 @@ public class Neo4JProfileRepository : IProfileRepository, IAsyncDisposable
         return await Session.WriteTransactionAsync(async tx =>
         {
             var result = await tx.RunAsync(
-                @"MATCH (followed:Profile {username: $FollowingUsername})
+                @"MATCH (followed:Profile {username: $FollowedUsername})
 OPTIONAL MATCH (follower:Profile {id: $FollowerUserId})
 OPTIONAL MATCH (follower)-[relation:FOLLOW]->(followed)
 RETURN
@@ -69,7 +69,7 @@ relation IS NOT NULL AS followed", info.ToDictionary());
         return await Session.WriteTransactionAsync(async tx =>
         {
             var result = await tx.RunAsync(
-                @"MATCH (followed:Profile {username: $FollowingUsername})
+                @"MATCH (followed:Profile {username: $FollowedUsername})
 MATCH (follower:Profile {id: $FollowerUserId})
 MERGE (follower)-[relation:FOLLOW]->(followed)
 RETURN
@@ -89,7 +89,7 @@ true AS followed", info.ToDictionary());
         return await Session.WriteTransactionAsync(async tx =>
         {
             var result = await tx.RunAsync(
-                @"MATCH (followed:Profile {username: $FollowingUsername})
+                @"MATCH (followed:Profile {username: $FollowedUsername})
 MATCH (follower:Profile {id: $FollowerUserId})
 OPTIONAL MATCH (follower)-[relation:FOLLOW]->(followed)
 DELETE relation

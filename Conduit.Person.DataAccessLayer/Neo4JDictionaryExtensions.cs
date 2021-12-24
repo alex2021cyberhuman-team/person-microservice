@@ -36,11 +36,11 @@ public static class Neo4JDictionaryExtensions
     public static IDictionary<string, object?> ToDictionary(
         this FollowingInfo model)
     {
-        var (followingUsername, followerUserId) = model;
+        var (followedUsername, followerUserId) = model;
         return new Dictionary<string, object?>
         {
             ["FollowerUserId"] = GetId(followerUserId),
-            ["FollowingUsername"] = followingUsername
+            ["FollowedUsername"] = followedUsername
         };
     }
 
@@ -59,7 +59,7 @@ public static class Neo4JDictionaryExtensions
             new(profileRecord["username"].As<string>(),
                 profileRecord["image"].As<string>(),
                 profileRecord["biography"].As<string>(),
-                profileRecord["following"].As<bool>()),
+                profileRecord["followed"].As<bool>()),
             Guid.Parse(profileRecord["id"].As<string>()));
     }
 }
