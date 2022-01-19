@@ -1,6 +1,6 @@
 using System.Net;
 using Conduit.Person.BusinessLogic;
-using Conduit.Person.WebApi.Extensions;
+using Conduit.Shared.AuthorizationExtensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,7 +28,7 @@ public class ProfilesController : ControllerBase
     {
         var currentUserId = HttpContext.GetCurrentUserIdOptional();
         var result = await _profileViewer.ReturnProfile(
-            new(username, Guid.Empty), cancellationToken);
+            new(username, currentUserId), cancellationToken);
         if (result.StatusCode == HttpStatusCode.OK)
         {
             return Ok(result.Response);

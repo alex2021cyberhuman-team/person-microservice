@@ -45,11 +45,9 @@ public static class Neo4JDictionaryExtensions
     }
 
     private static string GetId(
-        Guid followerUserId)
+        Guid? followerUserId)
     {
-        return followerUserId == Guid.Empty
-            ? string.Empty
-            : followerUserId.ToString();
+        return followerUserId?.ToString() ?? string.Empty;
     }
 
     public static (ProfileResponse, Guid) ToProfileResponse(

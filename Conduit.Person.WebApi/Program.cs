@@ -11,9 +11,6 @@ using Conduit.Shared.Startup;
 using Conduit.Shared.Tokens;
 using Microsoft.IdentityModel.Logging;
 
-var x = new Neo4JOptions();
-var j = JsonSerializer.Serialize(x);
-
 var builder = WebApplication.CreateBuilder(args);
 
 #region ServicesConfiguration
