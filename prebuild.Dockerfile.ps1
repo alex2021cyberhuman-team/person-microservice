@@ -5,5 +5,5 @@
 [String]$PathToRepository = './'
 )
 $Publish = "$($PathToRepository)app/publish/"
-dotnet publish "$($PathToRepository)Conduit.Person.WebApi" -c $CONFIG -o $Publish -r $RuntimeIdentifier
+dotnet publish "$($PathToRepository)Conduit.Person.WebApi" -c $CONFIG -o $Publish -r $RuntimeIdentifier --no-self-contained
 docker build -t $tag -f "$($PathToRepository)prebuild.Dockerfile" $PathToRepository
