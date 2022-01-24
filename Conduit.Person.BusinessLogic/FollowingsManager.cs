@@ -38,8 +38,11 @@ public class FollowingsManager : IFollowingsManager
         var (newFollowedProfile, followedId) =
             await _profileRepository.AddFollowingAsync(followingInfo);
 
-        await _createFollowingProducer.ProduceEventAsync(
-            new(followingInfo.FollowerUserId!.Value, followedId!.Value));
+        await _createFollowingProducer.ProduceEventAsync(new()
+        {
+            FollowedId = followedId!.Value,
+            FollowerId = followingInfo.FollowerUserId!.Value
+        });
 
         return GetResult(newFollowedProfile);
     }
@@ -57,8 +60,11 @@ public class FollowingsManager : IFollowingsManager
         var (newFollowedProfile, followedId) =
             await _profileRepository.RemoveFollowingAsync(followingInfo);
 
-        await _removeFollowingProducer.ProduceEventAsync(
-            new(followingInfo.FollowerUserId!.Value, followedId!.Value));
+        await _removeFollowingProducer.ProduceEventAsync(new()
+        {
+            FollowedId = followedId!.Value,
+            FollowerId = followingInfo.FollowerUserId!.Value
+        });
 
         return GetResult(newFollowedProfile);
     }

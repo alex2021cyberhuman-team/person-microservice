@@ -31,11 +31,9 @@ services.AddJwtServices(configuration.GetSection("Jwt").Bind)
     .AddHttpContextAccessor()
     .RegisterRabbitMqWithHealthCheck(configuration.GetSection("RabbitMQ").Bind)
     .RegisterConsumer<UpdateUserEventModel,
-        UpdateUserEventConsumer>(configuration.GetSection("Events:UpdateUser")
-        .Bind)
+        UpdateUserEventConsumer>(ConfigureConsumer)
     .RegisterConsumer<RegisterUserEventModel,
-        RegisterUserEventConsumer>(configuration
-        .GetSection("Events:RegisterUser").Bind)
+        RegisterUserEventConsumer>(ConfigureConsumer)
     .RegisterProducer<CreateFollowingEventModel>()
     .RegisterProducer<RemoveFollowingEventModel>()
     .RegisterNeo4JWithHealthCheck(configuration.GetSection("Neo4J").Bind)
@@ -73,3 +71,9 @@ await initializationScope.InitializeNeo4JAsync();
 #endregion
 
 app.Run();
+
+void ConfigureConsumer<T>(
+    RabbitMqSettings<T> settings)
+{
+    settings.Consumer = "person";
+}

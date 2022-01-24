@@ -8,11 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Conduit.Person.BusinessLogic\Conduit.Person.BusinessLogic.csproj" />
+    <ProjectReference Include="..\Conduit.Person.BusinessLogic\Conduit.Person.BusinessLogic.csproj"/>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Neo4j.Driver" Version="4.4.0" />
+    <PackageReference Include="Neo4j.Driver" Version="4.4.0"/>
   </ItemGroup>
 
 </Project>
