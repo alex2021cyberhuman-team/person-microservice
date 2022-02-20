@@ -1,4 +1,3 @@
-using System.Text.Json;
 using Conduit.Person.BusinessLogic;
 using Conduit.Person.DataAccessLayer;
 using Conduit.Person.WebApi.Consumers;
@@ -50,9 +49,6 @@ if (environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
     app.UseSwagger();
-    app.UseSwaggerUI(c =>
-        c.SwaggerEndpoint("/swagger/v1/swagger.json",
-            "Conduit.Person.WebApi v1"));
     IdentityModelEventSource.ShowPII = true;
 }
 
