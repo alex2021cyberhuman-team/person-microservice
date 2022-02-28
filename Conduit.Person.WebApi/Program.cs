@@ -8,6 +8,7 @@ using Conduit.Shared.Events.Models.Users.Update;
 using Conduit.Shared.Events.Services.RabbitMQ;
 using Conduit.Shared.Startup;
 using Conduit.Shared.Tokens;
+using Conduit.Shared.Validation;
 using Microsoft.IdentityModel.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,7 +19,8 @@ var services = builder.Services;
 var environment = builder.Environment;
 var configuration = builder.Configuration;
 
-services.AddControllers();
+services.AddControllers()
+    .RegisterValidateModelAttribute();
 services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1",
