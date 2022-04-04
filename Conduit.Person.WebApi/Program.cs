@@ -1,6 +1,7 @@
 using System.Globalization;
 using Conduit.Person.BusinessLogic;
 using Conduit.Person.DataAccessLayer;
+using Conduit.Person.WebApi;
 using Conduit.Person.WebApi.Consumers;
 using Conduit.Shared.Events.Models.Profiles.CreateFollowing;
 using Conduit.Shared.Events.Models.Profiles.RemoveFollowing;
@@ -77,7 +78,7 @@ await initializationScope.InitializeNeo4JAsync();
 
 app.Run();
 
-void ConfigureConsumer<T>(
+static void ConfigureConsumer<T>(
     RabbitMqSettings<T> settings)
 {
     settings.Consumer = "person";
