@@ -1,4 +1,4 @@
-﻿using Conduit.Person.BusinessLogic;
+using Conduit.Person.BusinessLogic;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 

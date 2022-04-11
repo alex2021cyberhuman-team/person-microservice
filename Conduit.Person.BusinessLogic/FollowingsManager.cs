@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using Conduit.Shared.Events.Models.Profiles.CreateFollowing;
 using Conduit.Shared.Events.Models.Profiles.RemoveFollowing;
 using Conduit.Shared.Events.Services;

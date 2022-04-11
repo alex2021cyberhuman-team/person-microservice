@@ -1,4 +1,4 @@
-﻿namespace Conduit.Person.WebApi;
+namespace Conduit.Person.WebApi;
 
 public class SharedResource
 {

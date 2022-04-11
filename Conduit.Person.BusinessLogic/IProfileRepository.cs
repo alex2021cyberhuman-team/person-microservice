@@ -1,4 +1,4 @@
-﻿using Conduit.Shared.Events.Models.Users.Register;
+using Conduit.Shared.Events.Models.Users.Register;
 using Conduit.Shared.Events.Models.Users.Update;
 
 namespace Conduit.Person.BusinessLogic;

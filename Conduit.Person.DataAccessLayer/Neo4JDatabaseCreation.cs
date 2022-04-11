@@ -1,4 +1,4 @@
-﻿namespace Conduit.Person.DataAccessLayer;
+namespace Conduit.Person.DataAccessLayer;
 
 public class Neo4JDatabaseCreation
 {

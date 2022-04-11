@@ -1,4 +1,4 @@
-﻿using Conduit.Person.BusinessLogic;
+using Conduit.Person.BusinessLogic;
 using Conduit.Shared.Events.Models.Users.Update;
 using Conduit.Shared.Events.Services;
 

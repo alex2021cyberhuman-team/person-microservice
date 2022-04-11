@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Options;
 using Neo4j.Driver;
 
 namespace Conduit.Person.DataAccessLayer;
