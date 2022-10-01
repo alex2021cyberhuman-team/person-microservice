@@ -11,7 +11,7 @@ using Conduit.Shared.Events.Services.RabbitMQ;
 using Conduit.Shared.Localization;
 using Conduit.Shared.Startup;
 using Conduit.Shared.Tokens;
-using Conduit.Shared.Validations;
+using Conduit.Shared.Validation;
 using Microsoft.IdentityModel.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
